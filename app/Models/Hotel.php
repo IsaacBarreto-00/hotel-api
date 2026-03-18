@@ -10,7 +10,10 @@ class Hotel extends Model
     protected $keyType = 'int';
     public $incrementing = false;
 
-    protected $fillable = ['id', 'name'];
+    protected $fillable = [
+        'id',
+        'name'
+    ];
 
     public function rooms()
     {

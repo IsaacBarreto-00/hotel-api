@@ -10,7 +10,12 @@ class Room extends Model
     protected $keyType = 'int';
     public $incrementing = false;
 
-    protected $fillable = ['id', 'hotel_id', 'name', 'inventory_count'];
+    protected $fillable = [
+        'id', 
+        'hotel_id', 
+        'name', 
+        'inventory_count'
+    ];
 
     public function hotel()
     {
