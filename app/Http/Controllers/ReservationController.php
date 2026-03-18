@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Reservation;
 
 class ReservationController extends Controller
 {
@@ -25,8 +26,7 @@ class ReservationController extends Controller
             'customer_last_name' => $request->customer_last_name,
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
-            'totalprice' => $request->totalprice,
-            'created_at' => $request->created_at
+            'total_price' => $request->totalprice
         ]);
 
         return response()->json($reservation);
@@ -56,8 +56,10 @@ class ReservationController extends Controller
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
             'totalprice' => $request->totalprice,
-            'created_at' => $request->created_at
         ]);
+
+        return response()->json($reservation);
+
     }
 
     /**
