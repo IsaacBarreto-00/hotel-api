@@ -17,16 +17,18 @@ Um arquivo XML é fornecido com dados inicias, onde o principal objetivo é faze
 
 `composer install`
 
+<hr>
+
 ### **Configuração do `.env`**
 
-`DB\_CONNECTION=mysql
-DB\_HOST=127.0.0.1
-DB\_PORT=3306
-DB\_DATABASE=hotel\_api
-DB\_USERNAME=root
-DB\_PASSWORD=`
+`DB\_CONNECTION=mysql`
+`DB\_HOST=127.0.0.1`
+`DB\_PORT=3306`
+`DB\_DATABASE=hotel\_api`
+`DB\_USERNAME=root`
+`DB\_PASSWORD=`
 
-##### **Rodar Migrations**
+#### **Rodar Migrations**
 
 `php artisan migrate`
 
@@ -34,7 +36,7 @@ DB\_PASSWORD=`
 
 `php artisan serve`
 
-##### **Importação de Dados(XML)**
+#### **Importação de Dados(XML)**
 
 Os arquivos XML estão localizadas na pasta:
 
@@ -48,42 +50,42 @@ Esse comando lê os arquivos XML e processa os dados, onde desde que o CRUD não
 
 ##### **Estrutura do Banco de Dados(MySQL)**
 
-###### **Tabela: hotel**
+##### **Tabela: hotel**
 
-`Schema::create('hotels', function (Blueprint $table) {
-$table->unsignedBigInteger('id')->primary();
-$table->string('name');
-$table->timestamps();
-});`
+`Schema::create('hotels', function (Blueprint $table) {`
+`$table->unsignedBigInteger('id')->primary();`
+`$table->string('name');`
+`$table->timestamps();`
+`});`
 
 
 
-###### **Tabela: rooms**
+##### **Tabela: rooms**
 
-`Schema::create('rooms', function (Blueprint $table) {
-$table->unsignedBigInteger('id')->primary();
-$table->unsignedBigInteger('hotel\_id');
-$table->string('name');
-$table->integer('inventory\_count');
-$table->timestamps();
-$table->foreign('hotel\_id')->references('id')->on('hotels')->cascadeOnDelete();
-});`
+`Schema::create('rooms', function (Blueprint $table) {`
+`$table->unsignedBigInteger('id')->primary();`
+`$table->unsignedBigInteger('hotel\_id');`
+`$table->string('name');`
+`$table->integer('inventory\_count');`
+`$table->timestamps();`
+`$table->foreign('hotel\_id')->references('id')->on('hotels')->cascadeOnDelete();`
+`});`
 
 
 ###### **Tabela: reservations**
 
-`Schema::create('reservations', function (Blueprint $table) {
-$table->unsignedBigInteger('id')->primary();
-$table->unsignedBigInteger('hotel\_id');
-$table->unsignedBigInteger('room\_id');
-$table->string('customer\_first\_name');
-$table->string('customer\_last\_name');
-$table->date('check\_in');
-$table->date('check\_out');
-$table->decimal('total\_price', 10, 2);
-$table->timestamps();
-$table->foreign('hotel\_id')->references('id')->on('hotels')->cascadeOnDelete();
-$table->foreign('room\_id')->references('id')->on('rooms')->cascadeOnDelete();
+`Schema::create('reservations', function (Blueprint $table) {`
+`$table->unsignedBigInteger('id')->primary();`
+`$table->unsignedBigInteger('hotel\_id');`
+`$table->unsignedBigInteger('room\_id');`
+`$table->string('customer\_first\_name');`
+`$table->string('customer\_last\_name');`
+`$table->date('check\_in');`
+`$table->date('check\_out');`
+`$table->decimal('total\_price', 10, 2);`
+`$table->timestamps();`
+`$table->foreign('hotel\_id')->references('id')->on('hotels')->cascadeOnDelete();
+`$table->foreign('room\_id')->references('id')->on('rooms')->cascadeOnDelete();`
 });`
 
 <hr>
