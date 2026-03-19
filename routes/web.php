@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HotelController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ReservationController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/hotels', [HotelController::class, 'index']);
+Route::get('/rooms', [RoomController::class, 'index']);
+Route::get('/reservations', [ReservationController::class, 'index']);

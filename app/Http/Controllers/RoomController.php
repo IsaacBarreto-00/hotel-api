@@ -8,11 +8,10 @@ use App\Http\Resources\RoomResource;
 
 class RoomController extends Controller
 {
-    
     // CRUD - Create, Read, Update, Delete
 
     public function index(){
-        $$room = Room::all();
+        $room = Room::all();
         return response()->json($room);
     }
 

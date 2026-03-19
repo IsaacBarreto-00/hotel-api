@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Models\Hotel;
+use App\Models\Room;
+use App\Models\Reservation;
 
 class index extends Command
 {
@@ -25,44 +28,49 @@ class index extends Command
      */
     public function handle()
     {
+
         $xml = simplexml_load_file(database_path('hotels.xml'));
 
-        foreach($xml->hotel as $hotel):
-            $this->info('Hotel ID: ' . $hotel['id']);
-            $this->info('Nome do Hotel: ' . $hotel->name);
-        endforeach;
+        foreach($xml->hotel as $hotel){
+            Hotel::create([
+                'id' => (int) $hotel['id'],
+                'name' => (string) $hotel->name
+            ]);
+        }
 
         echo "\n";
 
         $xml = simplexml_load_file(database_path('rooms.xml'));
 
         foreach($xml->room as $room):
-            $this->info('ID do Quarto: ' . $room['id']);
-            $this->info('Quarto: ' . $room->name);
-            $this->info('Hotel ID: ' . $room['hotel_id']);
-            $this->info('Capacidade de Pessoas: ' . $room['inventory_count']);
+            Room::create([
+                'id' => (int) $room['id'],
+                'name' => trim((string) $room),
+                'hotel_id' => (int) $room['hotel_id'],
+                'inventory_count' => (int) $room['inventory_count']
+            ]);
         endforeach;
 
         echo "\n";
 
-        
-
         $xml = simplexml_load_file(database_path('reservations.xml'));
 
         foreach($xml->reservation as $reservation):
-            $this->info('Reserva ID: ' . $reservation->id);
-            $this->info('Hotel ID: ' . $reservation->hotel_id);
-            $this->info('Quarto ID: ' . $reservation->room->id);
-            $this->info('Nome do Cliente: ' . $reservation->customer->first_name . ' ' . $reservation->customer->last_name);
-            $this->info('Check-in: ' . $reservation->room->arrival_date);
-            $this->info('Check-out: ' . $reservation->room->departure_date);
-            $this->info('Preço Total: ' . $reservation->room->totalprice);
-
-            echo "\n";
-
+            Reservation::updateOrCreate(
+                ['id' => (int) $reservation->id],
+                [
+                    'hotel_id' => (int) $reservation->hotel_id,
+                    'room_id' => (int) $reservation->room->id,
+                    'customer_first_name' => (string) $reservation->customer->first_name,
+                    'customer_last_name' => (string) $reservation->customer->last_name,
+                    'check_in' => (string) $reservation->room->arrival_date,
+                    'check_out' => (string) $reservation->room->departure_date,
+                    'total_price' => (float) $reservation->room->totalprice
+                ]
+            );
         endforeach;
 
-        
+        echo "\n";
 
     }
 }
