@@ -22,10 +22,15 @@ Um arquivo XML é fornecido com dados inicias, onde o principal objetivo é faze
 ### **Configuração do `.env`**
 
 `DB\_CONNECTION=mysql`
+<br>
 `DB\_HOST=127.0.0.1`
+<br>
 `DB\_PORT=3306`
+<br>
 `DB\_DATABASE=hotel\_api`
+<br>
 `DB\_USERNAME=root`
+<br>
 `DB\_PASSWORD=`
 
 #### **Rodar Migrations**
@@ -53,9 +58,13 @@ Esse comando lê os arquivos XML e processa os dados, onde desde que o CRUD não
 ##### **Tabela: hotel**
 
 `Schema::create('hotels', function (Blueprint $table) {`
+<br>
 `$table->unsignedBigInteger('id')->primary();`
+<br>
 `$table->string('name');`
+<br>
 `$table->timestamps();`
+<br>
 `});`
 
 
@@ -63,30 +72,49 @@ Esse comando lê os arquivos XML e processa os dados, onde desde que o CRUD não
 ##### **Tabela: rooms**
 
 `Schema::create('rooms', function (Blueprint $table) {`
+<br>
 `$table->unsignedBigInteger('id')->primary();`
+<br>
 `$table->unsignedBigInteger('hotel\_id');`
+<br>
 `$table->string('name');`
+<br>
 `$table->integer('inventory\_count');`
+<br>
 `$table->timestamps();`
+<br>
 `$table->foreign('hotel\_id')->references('id')->on('hotels')->cascadeOnDelete();`
+<br>
 `});`
 
 
 ###### **Tabela: reservations**
 
 `Schema::create('reservations', function (Blueprint $table) {`
+<br>
 `$table->unsignedBigInteger('id')->primary();`
+<br>
 `$table->unsignedBigInteger('hotel\_id');`
+<br>
 `$table->unsignedBigInteger('room\_id');`
+<br>
 `$table->string('customer\_first\_name');`
+<br>
 `$table->string('customer\_last\_name');`
+<br>
 `$table->date('check\_in');`
+<br>
 `$table->date('check\_out');`
+<br>
 `$table->decimal('total\_price', 10, 2);`
+<br>
 `$table->timestamps();`
-`$table->foreign('hotel\_id')->references('id')->on('hotels')->cascadeOnDelete();
+<br>
+`$table->foreign('hotel\_id')->references('id')->on('hotels')->cascadeOnDelete();`
+<br>
 `$table->foreign('room\_id')->references('id')->on('rooms')->cascadeOnDelete();`
-});`
+<br>
+`});`
 
 <hr>
 
